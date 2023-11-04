@@ -1,0 +1,570 @@
+/*Exercice 1 :
+#include<iostream>
+using namespace std;
+class nbrComplexe {
+private:
+    float R ;
+    float I ;
+public:
+    nbrComplexe(float r,float i):R(r),I(i){}
+    nbrComplexe operator+(nbrComplexe& autre)
+    {
+      float rs = R + autre.R;
+      float is = I + autre.I;
+      return nbrComplexe(rs,is);
+
+    }
+     nbrComplexe operator-(nbrComplexe& autre)
+    {
+      float rs = R - autre.R;
+      float is = I - autre.I;
+      return nbrComplexe(rs,is);
+    }
+     nbrComplexe operator*(nbrComplexe& autre)
+    {
+      float rs = R * autre.R;
+      float is = I * autre.I;
+      return nbrComplexe(rs,is);
+    }
+     nbrComplexe operator/(nbrComplexe& autre)
+    {
+      float denominateur = (autre.R *autre.R)+(autre.I*autre.I);
+      float rs = (R*autre.R +I*autre.I)/denominateur;
+      float is = (R*autre.I - I*autre.R)/denominateur;
+      return nbrComplexe(rs,is);
+    }
+    void afficher(){
+      cout<<R<<" + i"<<I<<endl;
+    }
+
+};
+int main(){
+float r1,r2,i1,i2;
+int choix;
+
+cout<<"veuillez entrer la partie reel de premiere nombre complexe : ";
+cin>>r1 ;
+
+cout<<"veuillez entrer la partie imaginaire de premiere nombre complexe : ";
+cin>>i1;
+nbrComplexe objet1(r1,i1);
+
+cout<<"veuillez entrer la partie reel de deuxieme nombre complexe : ";
+cin>>r2 ;
+cout<<"veuillez entrer la partie imaginaire de deuxieme nombre complexe : ";
+cin>>i2 ;
+nbrComplexe objet2(r2 ,i2);
+
+cout << "Menu des opérations sur les nombres complexes : "<<endl;
+cout << "1) Adition"<<endl<<"2) Soustraction"<<endl<<"3) Multiplication"<<endl<<"4) Division"<<endl;
+    cout << "Choisissez une opération de 1 à 4) : ";
+    cin >>choix;
+    nbrComplexe resultat(0,0);
+  switch(choix){
+    case 1 :
+        resultat = objet1 + objet2;
+         break;
+    case 2 :
+        resultat = objet1 - objet2;
+        break;
+
+    case 3 :
+        resultat = objet1 * objet2;
+        break;
+
+
+    case 4 :
+        resultat = objet1 / objet2;
+        break;
+
+    default:
+        cout << "Choix invalide.\n";
+    }
+  resultat.afficher();
+
+
+return 0;
+}
+
+*/
+//Exercice 2:
+/*
+#include<iostream>
+#include<list>
+#include <iterator>
+using namespace std;
+
+void afficher (list<int> objet)
+{
+list <int> :: iterator it;
+for
+(it = objet.begin (); it != objet.end (); it++)
+cout << *it<<"\n";
+}
+
+void triBulle(std::list<int>& objet) {
+   int k;
+
+    do {
+       k=0;
+        for (list<int>::iterator it =objet.begin(); it != objet.end(); ++it) {
+            list<int>::iterator it2 = next(it);
+            if (*it > *it2) {
+               swap(*it, *it2);
+               k++;
+            }
+        }
+    } while (k>0);
+}
+
+void triselection(list<int>& objet) {
+    for (list<int> ::iterator it = objet.begin(); it != objet.end(); ++it) {
+        for (list<int> ::iterator j = next(it); j != objet.end(); ++j) {
+            if (*j < *it) {
+            swap(*it, *j);
+            }
+        }
+    }
+}
+
+void triInsersion(list<int>& objet) {
+    for (list<int> ::iterator j = next(objet.begin()); j != objet.end(); ++j) {
+        int cle = *j;
+        list<int> ::iterator insertIt = j;
+        while (insertIt != objet.begin() && *insertIt > cle) {
+        *next(insertIt) = *insertIt;
+            --insertIt;
+        }
+      *next(insertIt) = cle;
+    }
+}
+
+
+int main(){
+list<int> objet;
+int n ,i ,e;
+cout<<"veuillez saisir le nombre des entiers qui vous voulez entrer : ";
+cin>>n;
+for(i=0;i<n;i++)
+{
+    cout<<"Entrer l'entier "<<i+1<<" : ";
+    cin>>e;
+    objet.push_back(e);
+
+}
+cout<<"La liste initiale :\n";
+afficher(objet);
+
+cout<<"La liste est trie par le tri a bulle :\n";
+triBulle(objet);
+afficher(objet);
+
+cout<<"La liste est trie par le tri par selection:\n";
+triselection(objet);
+afficher(objet);
+
+cout<<"La liste est trie par le tri par insertion:\n";
+triInsersion(objet);
+afficher(objet);
+
+return 0;
+}*/
+/*
+//Exercice 3 :
+#include <iostream>
+#include <list>
+#include <string>
+using namespace std;
+
+struct personne {
+  string nom;
+  string prenom;
+  int age;
+
+};
+bool comparepersonnes (const personne& p1,const personne& p2) {
+
+if (p1.nom!=p2.nom)
+{
+        return p1.nom < p2.nom  ;
+}
+else{
+    return p1.prenom < p2.prenom;
+}
+}
+
+int main(){
+string nom,prenom;
+personne p;
+int age,i;
+string ajoute;
+list<personne> listpersonnes;
+do{
+
+cout<<"veuillez entrer le nom de personne : ";
+cin>>p.nom;
+cout<<"veuillez entrer le prenom de personne : ";
+cin>>p.prenom;
+cout<<"veuillez entrer l'age de personne : ";
+cin>>p.age;
+listpersonnes.push_back(p);
+cout<<"voulez-vous ajouter un autre pesonne ?(oui/non)";
+cin>>ajoute;
+}while(ajoute=="oui" || ajoute=="OUI");
+
+listpersonnes.sort(comparepersonnes);
+cout <<"la liste des personnes trieer par leurs non et prenom :"<<endl;
+ for(const personne& p : listpersonnes)
+        cout << "Nom : " << p.nom << "\tPrénom : " << p.prenom << "\tÂge : " << p.age <<endl;
+
+return 0;
+
+}
+*/
+//Exercice 4 :
+/*
+#include <iostream>
+#include <set>
+#include <vector>
+#include <list>
+#include <iterator>
+#include <string>
+
+using namespace std;
+
+bool recherche(int valeurChercher, set<int> s) {
+    for (set<int>::iterator it = s.begin(); it != s.end(); ++it) {
+        if (*it == valeurChercher)
+            return true;
+    }
+    return false;
+}
+
+// question 3
+bool recherche(int valeurChercher, set<int>::iterator debut, set<int>::iterator fin) {
+    for (set<int>::iterator it = debut; it != fin; ++it) {
+        if (*it == valeurChercher)
+            return true;
+    }
+    return false;
+}
+
+template<class T, class TI> bool recherche(T valeurChercher, TI debut, TI fin) {
+    for (TI it = debut; it != fin; ++it) {
+        if (*it == valeurChercher)
+            return true;
+    }
+    return false;
+}
+
+int main() {
+    int val;
+    set<int> s;
+    for (int i = 0; i < 100; i++)
+        s.insert(i);
+
+    cout << "Veuillez entrer la valeur à chercher : ";
+    cin >> val;
+
+    if (recherche(val, s)) {
+        cout << "La valeur " << val << " est présente dans le set d'entiers." << endl;
+    } else {
+        cout << "La valeur " << val << " n'est pas présente dans le set d'entiers." << endl;
+    }
+
+    cout << "Question 3 : " << endl;
+
+    if (recherche(val, s.begin(), s.end())) {
+        cout << "La valeur " << val << " est présente dans le set d'entiers." << endl;
+    } else {
+        cout << "La valeur " << val << " n'est pas présente dans le set d'entiers." << endl;
+    }
+
+    cout << "Question 4 : " << endl;
+
+    // Vecteur de chaînes de caractères
+    int n;
+    string motChercher;
+    cout << "Veuillez entrer le nombre d'éléments du vecteur : ";
+    cin >> n;
+    vector<string> vs(n);
+    for (int i = 0; i < n; i++) {
+        cout << "Veuillez entrer le mot " << i + 1 << " : ";
+        cin >> vs[i];
+    }
+    cout << "Veuillez entrer le mot à chercher : ";
+    cin >> motChercher;
+
+    if (recherche(motChercher, vs.begin(), vs.end())) {
+        cout << "Le mot " << motChercher << " est présent dans le vecteur de chaînes de caractères." << endl;
+    } else {
+        cout << "Le mot " << motChercher << " n'est pas présent dans le vecteur de chaînes de caractères." << endl;
+    }
+
+    // Liste d'entiers
+    list<int> liste;
+    cout << "Veuillez entrer le nombre d'entiers : ";
+    cin >> n;
+    for (int i = 0; i < n; ++i) {
+        int len;
+        cin >> len;
+        liste.push_back(len);
+    }
+    cout << "Veuillez entrer la valeur à chercher : ";
+    cin >> val;
+
+    if (recherche(val, liste.begin(), liste.end())) {
+        cout << "La valeur " << val << " est présente dans la liste d'entiers." << endl;
+    } else {
+        cout << "La valeur " << val << " n'est pas présente dans la liste d'entiers." << endl;
+    }
+
+    // Tableau de réels
+    float valeurRChercher;
+    cout << "Veuillez entrer la taille du tableau : ";
+    cin >> n;
+    float T[n];
+    cout << "Veuillez remplir le tableau : " << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "la valeur " << i + 1 << " : ";
+        cin >> T[i];
+    }
+    cout << "Veuillez entrer la valeur à chercher : ";
+    cin >> valeurRChercher;
+
+    if (recherche(valeurRChercher, T, T + n)) {
+        cout << "La valeur " << valeurRChercher << " est présente dans le tableau des réels." << endl;
+    } else {
+        cout << "La valeur " << valeurRChercher << " n'est pas présente dans le tableau des réels." << endl;
+    }
+
+    return 0;
+}
+
+*/
+
+
+
+
+
+
+
+
+//Exercice 5 :
+/*#include <iostream>
+using namespace std;
+class Test{
+public:
+static int tableau[] ;
+public :
+static int division(int indice, int diviseur){
+    if(diviseur == 0)
+    {
+        throw"La division par zéro n'est pas autorisée.";
+    }
+return tableau[indice]/diviseur;
+}
+};
+int Test::tableau[] = {17, 12, 15, 38, 29, 157, 89, -22, 0, 5} ;
+int main() {
+int x, y;
+cout << "Entrez l’indice de l’entier à diviser: " << endl;
+cin >> x ;
+cout << "Entrez le diviseur: " << endl;
+cin >> y ;
+cout << "Le résultat de la division est: "<< endl;
+try{
+cout <<Test::division(x,y) << endl;
+}
+catch (const char* e) {
+cerr << e << endl;
+}
+return 0;
+}
+*/
+//Exercice 6 :
+/*
+#include <iostream>
+using namespace std ;
+
+class vect {
+protected:
+    int nelem;  // nombre d'éléments
+    int *adr;   // adresse zone dynamique contenant les éléments
+
+public:
+    vect(int n) : nelem(n), adr(new int[n]) {
+        for (int i = 0; i < n; ++i) {
+            adr[i] = 0;
+        }
+    }
+
+    ~vect() {
+        delete[] adr;
+    }
+
+    int &operator[](int i) {
+        return adr[i];
+    }
+
+    int taille() const {
+        return nelem;
+    }
+};
+
+class vectok : public vect {
+public:
+    vectok(int n) : vect(n) {}
+
+    vectok( vectok const &autre) : vect(autre.nelem) {
+        for (int i = 0; i < nelem; ++i) {
+            adr[i] = autre.adr[i];
+        }
+    }
+
+  vectok &operator=(vectok const &autre) {
+    if (nelem == autre.nelem) {
+        for (int i = 0; i < nelem; ++i) {
+            adr[i] = autre.adr[i];
+        }
+    }
+    return *this;
+}
+};
+
+int main(){
+    int n ;
+    cout<<"veuillez entrer la taille de vecteur : ";
+    cin>>n;
+    vectok v1(n);
+    cout<<"veuillez saisir les elements de vecteur : "<<endl;
+    for(int i=0 ;i<n ;i++)
+    {
+        cout<<"v1["<<i+1<<"] = ";
+        cin>>v1[i];
+    }
+    vectok v2 (v1) ;
+    vectok v3(n);
+    v3 = v1;
+    cout<<"affichage des elements de premier vecteur : "<<endl;
+    for(int i=0 ;i<n ;i++)
+    {
+        cout<<"v1["<<i+1<<"] = "<<v1[i]<<endl;
+    }
+    cout<<"affichage des elements de deuxieme vecteur qu'est le copie de premier vecteur : "<<endl;
+    for(int i=0 ;i<n ;i++)
+    {
+        cout<<"v2["<<i+1<<"] = "<<v2[i]<<endl;
+    }
+    cout<<"affichage des elements de troisieme vecteur ( Utilisation de l'opérateur d'affectation) : "<<endl;
+     for(int i=0 ;i<n ;i++)
+    {
+        cout<<"v3["<<i+1<<"] = "<<v3[i]<<endl;
+    }
+
+
+    return 0;
+    }
+*/
+
+//Exercice 7 :
+/*
+le programme affiche :
+    ** construction objet A : 1 1
+    ** construction objet B : 1 0.0
+    ** construction objet C : 3 3
+    ** construction objet A : 10 1
+    ** construction objet B : 1 5.0
+    ** construction objet C : 12 21
+*/
+//Exercice 8 :
+/*
+#include<iostream>
+using namespace std ;
+
+template <class T> T carre(T var){
+T resultat ;
+resultat = var*var;
+return resultat ;
+}
+int main (){
+    int var;
+    float reel;
+
+cout<<"veuillez entrer un nombre entier :";
+cin>>var;
+cout<<"le carre de la valeur saisi est : "<<carre(var)<<endl;
+
+cout<<"veuillez entrer un nombre reel :";
+cin>>reel;
+cout<<"le carre de la valeur saisi est : "<<carre(reel)<<endl;
+
+return 0;
+}
+*/
+
+//Exercice 9 :
+/*
+#include<iostream>
+using namespace std ;
+template <class T> class point
+{ T x, y ; // coordonnees
+public :
+point (T abs, T ord) { x = abs ; y = ord ; }
+void affiche () ;
+} ;
+template <class T> void point<T>::affiche ()
+{ cout << "Coordonnees : " << x << " " << y << "\n" ;
+}
+int main(){
+point <char> p (60, 65) ;
+p.affiche () ;
+return 0;
+}
+*/
+/*
+a)ce programme affiche une erreur ( < A ).
+Alors on vois que c'est une erreur de compilation car le type des valeurs qui nous allons initialiser dans un objet de la classe point<char> est un caractere mais les valeus qui sont initialiser à l'objet sont des entiere .
+
+b)pour les instructions précédentes affichent bien nous devons spécifier le type de données correctement lors de l'initialisation de l'objet p.
+
+point<int> p(60, 65);
+p.affiche();
+*/
+//Exercice 10 :
+/*
+#include<iostream>
+using namespace std ;
+class erreur
+{ public :
+int num ;
+} ;
+class A
+{ public :
+A(int n)
+{ if (n==1) { erreur er ; er.num = 999 ; throw er ; }
+}
+};
+main()
+{ void f() ;
+try
+{ f() ;
+}
+catch (erreur er)
+{ cout << "dans main : " << er.num << "\n" ;
+}
+cout << "suite main\n" ;
+} void f()
+{ try
+{ A a(1) ;
+}
+catch (erreur er)
+{ cout << "dans f : " << er.num << "\n" ;
+}
+}*/
+/*la resultat qui affiche se programme c'est :
+dans f : 999
+suite main
+*/
+//car dans la fonction f on a initialiser le constructeur A par 1 c'est pour cela  throw lance une erreur et catche qui existe dans la fonction va l'attraper .
+//Et donc il n'y a pas une erreur à travers la fonction main et l'execution va se termine, c'est pour cela affiche 'suite main'
